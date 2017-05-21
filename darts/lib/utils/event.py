@@ -66,7 +66,7 @@ Example::
     foo
 """
 
-from __future__ import with_statement
+
 
 from logging import getLogger
 from sys import exc_info
@@ -376,7 +376,7 @@ def reraise(exception, value, traceback, subscription, args, keys):
     """
     """
 
-    raise exception, value, traceback
+    raise exception(value).with_traceback(traceback)
 
 
 class Publisher(object):
@@ -429,11 +429,11 @@ class Publisher(object):
         """
         
         if listener is None:
-            raise ValueError, "listener must not be None"
+            raise ValueError("listener must not be None")
         if reference_retention not in (WEAK, STRONG):
-            raise ValueError, "unsupported reference retention policy"
+            raise ValueError("unsupported reference retention policy")
         if not isinstance(method, str):
-            raise ValueError, "method must be a string"
+            raise ValueError("method must be a string")
         subscription = reference_retention(self, listener, method)
         with self.__lock:
             buffer = list()
@@ -542,7 +542,7 @@ def log_publication_error(exception, value, traceback, subscription, args, keys)
     to be notified by returning normally.
     """
 
-    log.error(u"listener %r.%s raised exception during event notification with arguments %r",
+    log.error("listener %r.%s raised exception during event notification with arguments %r",
               subscription.listener, 
               subscription.method,
               (args, keys),

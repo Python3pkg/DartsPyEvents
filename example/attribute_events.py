@@ -161,10 +161,10 @@ class VerboseObject(object):
 
 
 def printer(*args, **keys):
-    print args, keys
+    print(args, keys)
 
 vb = VerboseObject()
-vb.display_name = U"Init"
+vb.display_name = "Init"
 vb.on_attribute_change.subscribe(printer)
-vb.display_name = U"Foo"
-vb.display_name = U"Bar"
+vb.display_name = "Foo"
+vb.display_name = "Bar"
